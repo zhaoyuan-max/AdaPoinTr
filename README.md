@@ -1,3 +1,19 @@
+> **Note: This repository is a fork of the original AdaPoinTr, customized for OralCavity point cloud reconstruction.**
+
+## Modifications from Baseline
+Based on the original AdaPoinTr (MIT License), we made the following modifications for our clinical study:
+
+1. **Network Architecture Changes**: See `cfgs/ShapeNet55_models/AdaPoinTr_OralCavity.yaml`.
+   - `center_num`: [1024, 512]
+   - `global_feature_dim`: 2048
+   - `k`: 16
+2. **Data Preprocessing**: See `datasets/preprocess.py` for the conceptual logic.
+   - Hybrid normalization (70% GT, 30% partial input)
+   - Left-right symmetry enhancement
+   - Noise injection (avoiding tooth regions)
+3. **Data Privacy**: The full training dataset and pipeline are not publicly released due to patient privacy and institutional policies. Full code can be made available upon reasonable request to the corresponding author.
+
+
 # PoinTr: Diverse Point Cloud Completion with Geometry-Aware Transformers
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/pointr-diverse-point-cloud-completion-with/point-cloud-completion-on-shapenet)](https://paperswithcode.com/sota/point-cloud-completion-on-shapenet?p=pointr-diverse-point-cloud-completion-with)
