@@ -33,7 +33,7 @@ dataset : {
 model : {
     NAME: AdaPoinTr, 
     num_query: 512, 
-    num_points: 8192,
+    num_points: 16384,          
     center_num: [1024, 512],
     global_feature_dim: 2048,
     encoder_type: graph,
