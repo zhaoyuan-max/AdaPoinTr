@@ -1,3 +1,4 @@
 NAME: OralCavity
 DATA_PATH: data/OralCavity
 PC_PATH: data/OralCavity/baseline1029
+n_points: 8192
