@@ -6,13 +6,16 @@ The original AdaPoinTr codebase is publicly available at https://github.com/yuxu
 To support reproducibility, this repository provides the following details:
 
 1. **Network Configuration**: Detailed configuration modifications are provided in `cfgs/ShapeNet55_models/AdaPoinTr_OralCavity.yaml`. We modified several hyperparameters, including `center_num = [1024, 512]`, `global_feature_dim = 2048`, `num_points = 16384` (output points), and local aggregation range `K = 16`.
+
 2. **Data Preprocessing**: The conceptual logic is provided in `datasets/preprocess.py`. This includes:
    - **Hybrid Normalization**: 70% probability of GT-based normalization during training; the remaining training, validation, and test samples use defective-based normalization.
-   - **Noise Injection**: Zero-mean Gaussian noise (\(\sigma=0.01\) per axis) added within the defect mask only (probability 0.5).
+   - **Noise Injection**: Zero-mean Gaussian noise (`sigma=0.01` per axis) added within the defect mask only (probability 0.5).
    - **Symmetry Augmentation**: Left-right symmetry enhancement to maintain arch continuity.
-3. **Loss Function**: The network is optimized by a joint objective: \(\mathcal{L}_{\text{total}} = D_1(P_c, G) + D_1(P_f, G) + 0.5 D_1(P_{dn}, G_{dn})\), where \(D_1\) is Chamfer Distance L1, \(P_c/P_f\) are coarse/dense predictions, and \(P_{dn}/G_{dn}\) are auxiliary denoising predictions and targets.
-4. **Post-processing Details**: The pseudo-code for our downstream modules (automated reconstruction and bone block generation) is fully described in the Supplementary Materials (Algorithms 2 and 3) of our paper.
 
+3. **Loss Function**: The network is optimized by a joint objective: `L_total = D1(Pc, G) + D1(Pf, G) + 0.5 * D1(Pdn, Gdn)`.
+   Where `D1` is Chamfer Distance L1, `Pc`/`Pf` are coarse/dense predictions, and `Pdn`/`Gdn` are auxiliary denoising predictions and targets.
+
+4. **Post-processing Details**: The pseudo-code for our downstream modules (automated reconstruction and bone block generation) is fully described in the Supplementary Materials (Algorithms 2 and 3) of our paper.
 
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/pointr-diverse-point-cloud-completion-with/point-cloud-completion-on-shapenet)](https://paperswithcode.com/sota/point-cloud-completion-on-shapenet?p=pointr-diverse-point-cloud-completion-with)
