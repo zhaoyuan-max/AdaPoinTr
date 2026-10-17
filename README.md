@@ -1,12 +1,17 @@
 > **Note: This repository is a fork of the original AdaPoinTr, customized for OralCavity point cloud reconstruction.**
 
 ## Code Availability and Modifications
-The original AdaPoinTr codebase is publicly available at https://github.com/yuxumin/PoinTr. Due to commercial intellectual property restrictions imposed by our industrial partner, the full modified source code and the complete implementations of our task-specific post-processing modules are proprietary and **cannot be publicly released**. 
+The original AdaPoinTr codebase is publicly available at https://github.com/yuxumin/PoinTr. Due to commercial intellectual property restrictions imposed by our industrial partner, the full modified source code and the complete implementations of our task-specific post-processing modules are proprietary and **cannot be publicly released**.
 
-To support reproducibility, this repository only provides the following:
-1. **Network Configuration**: Detailed configuration modifications are provided in `cfgs/ShapeNet55_models/AdaPoinTr_OralCavity.yaml` (e.g., center_num, global_feature_dim, k).
-2. **Data Preprocessing**: The conceptual logic of our customized preprocessing strategies is provided in `datasets/preprocess.py` (e.g., hybrid normalization, left-right symmetry enhancement, non-dental surface noise augmentation).
-3. **Post-processing Details**: The pseudo-code for our downstream modules (automated reconstruction and bone block generation) is fully described in the Supplementary Materials (Algorithms 2 and 3) of our paper.
+To support reproducibility, this repository provides the following details:
+
+1. **Network Configuration**: Detailed configuration modifications are provided in `cfgs/ShapeNet55_models/AdaPoinTr_OralCavity.yaml`. We modified several hyperparameters, including `center_num = [1024, 512]`, `global_feature_dim = 2048`, `num_points = 16384` (output points), and local aggregation range `K = 16`.
+2. **Data Preprocessing**: The conceptual logic is provided in `datasets/preprocess.py`. This includes:
+   - **Hybrid Normalization**: 70% probability of GT-based normalization during training; the remaining training, validation, and test samples use defective-based normalization.
+   - **Noise Injection**: Zero-mean Gaussian noise (\(\sigma=0.01\) per axis) added within the defect mask only (probability 0.5).
+   - **Symmetry Augmentation**: Left-right symmetry enhancement to maintain arch continuity.
+3. **Loss Function**: The network is optimized by a joint objective: \(\mathcal{L}_{\text{total}} = D_1(P_c, G) + D_1(P_f, G) + 0.5 D_1(P_{dn}, G_{dn})\), where \(D_1\) is Chamfer Distance L1, \(P_c/P_f\) are coarse/dense predictions, and \(P_{dn}/G_{dn}\) are auxiliary denoising predictions and targets.
+4. **Post-processing Details**: The pseudo-code for our downstream modules (automated reconstruction and bone block generation) is fully described in the Supplementary Materials (Algorithms 2 and 3) of our paper.
 
 
 
